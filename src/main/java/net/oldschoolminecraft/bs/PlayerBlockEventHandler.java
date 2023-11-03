@@ -67,7 +67,7 @@ public class PlayerBlockEventHandler implements Listener
     @EventHandler
     public void onBlockPhysics(BlockPhysicsEvent event)
     {
-        List<Material> causes = Arrays.asList(Material.REDSTONE_WIRE, Material.DIODE_BLOCK_ON, Material.REDSTONE_TORCH_ON, Material.STONE_PLATE, Material.WOOD_PLATE);
+        List<Material> causes = Arrays.asList(Material.REDSTONE_WIRE, Material.DIODE_BLOCK_ON, Material.REDSTONE_TORCH_ON, Material.STONE_PLATE, Material.WOOD_PLATE, Material.LEVER, Material.STONE_BUTTON);
         if (causes.contains(event.getChangedType()) && event.getBlock().getType() == Material.TNT)
             event.setCancelled(true); // nope.avi
     }
