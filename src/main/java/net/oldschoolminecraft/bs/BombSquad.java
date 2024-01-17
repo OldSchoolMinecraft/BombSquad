@@ -1,5 +1,6 @@
 package net.oldschoolminecraft.bs;
 
+import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BombSquad extends JavaPlugin
