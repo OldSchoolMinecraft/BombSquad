@@ -3,6 +3,8 @@ package net.oldschoolminecraft.bs;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -44,6 +46,33 @@ public class ExplosionHandler implements Listener
             else System.out.println("[BombSquad] EVENT PLAYER HANDLE IS NULL");
 
             event.setCancelled(true);
+
+            for (Player player : Bukkit.getOnlinePlayers())
+            {
+                if (player.getLocation().distanceSquared(event.getBlock().getLocation()) < 100)
+                {
+                    // send block update in a 3x3 range with real block types.
+                    // the goal is to make sure ghost blocks disappear for clients near the TNT.
+
+                    int baseX = event.getBlock().getX();
+                    int baseY = event.getBlock().getY();
+                    int baseZ = event.getBlock().getZ();
+
+                    // 3x3 area centered on the TNT block
+                    for (int dx = -1; dx <= 1; dx++)
+                    {
+                        for (int dz = -1; dz <= 1; dz++)
+                        {
+                            int x = baseX + dx;
+                            int y = baseY;
+                            int z = baseZ + dz;
+
+                            Block realBlock = event.getBlock().getWorld().getBlockAt(x, y, z);
+                            player.sendBlockChange(realBlock.getLocation(), realBlock.getType(), realBlock.getData());
+                        }
+                    }
+                }
+            }
         }
     }
 }
