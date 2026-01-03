@@ -1,5 +1,8 @@
 package net.oldschoolminecraft.bs;
 
+import org.bukkit.*;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,6 +17,7 @@ public class BombSquad extends JavaPlugin
         instance = this;
         config = new BSConfig(new File(getDataFolder(), "config.yml"));
         getServer().getPluginManager().registerEvents(new ExplosionHandler(), this);
+
         System.out.println("BombSquad enabled");
     }
 
