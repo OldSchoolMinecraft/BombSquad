@@ -14,8 +14,7 @@ public class ExplosionHandler implements Listener
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
     {
-        if (event.getPlayer().getItemInHand().getType() == Material.FLINT_AND_STEEL &&
-            event.getBlock().getType() == Material.TNT)
+        if (event.getBlock().getType() == Material.TNT)
         {
             int ptHoursRequired = (int) BombSquad.getInstance().getConfig().getConfigOption("playTimeHoursRequired");
             int ptHours = (int) PTUtil.getPlaytimeHours(event.getPlayer().getName());
