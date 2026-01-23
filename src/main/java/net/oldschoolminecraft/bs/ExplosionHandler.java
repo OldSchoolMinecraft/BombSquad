@@ -36,13 +36,17 @@ public class ExplosionHandler implements Listener
     {
         if (event.getBlock().getType() == Material.TNT)
         {
-            Bukkit.getScheduler().scheduleAsyncDelayedTask(BombSquad.getInstance(), () ->
+            int ptHoursRequired = (int) BombSquad.getInstance().getConfig().getConfigOption("playTimeHoursRequired");
+            int ptHours = (int) PTUtil.getPlaytimeHours(event.getPlayer().getName());
+
+            if (event.getPlayer() != null && ptHours < ptHoursRequired)
             {
-                Player player = event.getPlayer();
-                Block block = event.getBlock();
-                System.out.println("[BombSquad Debug] TNT placed by " + player.getName() + " at " + block.getLocation());
-                System.out.println("[BombSquad Debug] TNT data value: " + block.getData());
-            }, 3L);
+                event.setCancelled(true);
+                event.getPlayer().sendMessage(ChatColor.RED + "You do not have permission to ignite TNT!");
+                System.out.println("[BombSquad] TNT placement blocked @ " + event.getBlock().getLocation());
+                System.out.println("[BombSquad] Player: " + event.getPlayer().getName());
+                System.out.println("[BombSquad] Playtime Hours: " + ptHours + " (required: " + ptHoursRequired + ")");
+            }
         }
     }
 
